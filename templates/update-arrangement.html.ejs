@@ -1,0 +1,11 @@
+<div>
+    <form action="/update" method="post" enctype="multipart/form-data">
+        <h1>Update Arrangement</h1>
+        Arrangement Name <br>
+        <input type="text" name="name" value="<%= name %>"> <br> <br>
+        Arrangement Description: <br>
+        <input type="text" name="description" value="<%= description %>"> <br> <br>
+        <input type="hidden" name="id" value = <%= id %> >
+        <input type="submit" value="Submit"> <br> <p> </p>
+    </form> 
+</div>
