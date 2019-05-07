@@ -1,3 +1,11 @@
+
+///
+/// Admin username - bradenAdmin
+///  Admin password - bradenAdmin 
+///
+/// Server runs on port 2000 b/c of difficulty on my local machine
+///
+
 var http = require('http');
 const Router = require('./lib/router');
 const Templates = require('./lib/templates');

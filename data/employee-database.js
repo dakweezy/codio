@@ -8,10 +8,10 @@ employee.destroyDatabase = function() {
          (err) => {console.log(err);});
 }
 
-employee.updateUser = function (username, role, callback) {
+employee.updateUser = function (data, callback) {
     db.run("UPDATE users SET role = ? WHERE username = ?",
-          role,
-          username,
+          data.userType,
+          data.username,
           function(err){
              if(err) return callback(err);
              else return callback();

@@ -12,8 +12,8 @@ function updatePassword(req, res)
     parseBody(req, res, callback => {
         var data = callback.body;
         var user = req.session;
-        console.log(data);
-        console.log(user);
+        //console.log(data);
+        //console.log(user);
         if(user.currentPassword != '' && user.newPassword != '' && user.newPassword == user.passwordNewConfirm)
         {
              bcrypt.compare(data.currentPassword, user.cryptedPassword, (err, resp) => {
@@ -35,7 +35,7 @@ function updatePassword(req, res)
                  }
                  else  
                  {
-                     res.message = "** Filed ro Update Password **";
+                     res.message = "** Filed to Update Password **";
                      serveHome(req, res);
                  }
              

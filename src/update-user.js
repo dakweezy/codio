@@ -13,8 +13,7 @@ function updateUser(req, res)
         var data = callback.body;
         if(data.username != "")
         {
-            db.updateUser(data.username, data.userType, (err) => 
-            {
+            db.employee.updateUser(data, (err) => {
                 if(err) res.message = "** Filed to Update User **";
                 else res.message = "** Updated User **";
                 serveHome(req, res);
