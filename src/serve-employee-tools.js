@@ -7,9 +7,10 @@ function serveEmployeeTools(req, res) {
   var nav = res.templates.render("_nav.html", {url: req.url});
   var footer = res.templates.render("_footer.html", {});
   var content = "";
-  if(true) content += res.templates.render("login.html", {});
-  if(true) content += res.templates.render("update-password.html", {});
-  if(true) content += res.templates.render("create-user.html", {});
+  if(!req.session || !req.session.role) content += res.templates.render("login.html", {});
+  if(req.session && req.session.role) content += res.templates.render("update-password.html", {});
+  if(req.session && req.session.role == "Admin") content += res.templates.render("create-user.html", {});
+  if(req.session && req.session.role == "Admin") content += res.templates.render("update-user.html", {});
   var html = res.templates.render("_page.html", {
     page: "Employee Tools",
     navigation: nav,

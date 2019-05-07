@@ -19,12 +19,16 @@ const employeeTools = require('./src/serve-employee-tools')
 const login = require('./src/login');
 const createUser = require('./src/create-user')
 const updatePassword = require('./src/update-password')
+const auth = require('./src/auth');
+const updateUser = require("./src/update-user");
 
-const PORT = 3000;
+
+const PORT = 2000;
 
 var router = new Router(serve404);
 var templates = new Templates("./templates");
 
+router.addRoute("POST", "/update-user", updateUser);
 router.addRoute("POST", "/update-password", updatePassword);
 router.addRoute("POST", "/create-user", createUser);
 router.addRoute("POST", "/login", login);
@@ -47,9 +51,19 @@ router.addRoute("GET", "/arrangement-images/:id", serveArrangementImage);
 
 // Setup http server
 var server = http.createServer((req, res) => {
+  // grab any cookies from user
+  // 
+  
+  if(req.headers.cookie)
+  {
+       var cookies = parseCookie(req.headers.cookie);   
+       var id = cookies["ID"];
+       req.sessionId = id;
+       req.session = auth.getUser(id);
+  }
+    
   // Attach the template library to the response
   res.templates = templates;
-  // TODO: Attach the database to the response
   router.route(req, res);
 });
 
@@ -57,3 +71,21 @@ var server = http.createServer((req, res) => {
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+
+function parseCookie(cookie) {
+  var cookies = {};
+  // Cookies are key/value pairs separated by semicolons,
+  // followed by a space, so split the cookie by that string
+  cookie.split('; ').forEach(function(pair) {
+    // Individual key/value are separated by an equal sign (=)
+    pair = pair.split('=');
+    var key = pair[0];
+    // values are URI encoded, so decode them
+    var value = decodeURIComponent(pair[1]);
+    // Assign values to keys in the associative array
+    cookies[key] = value;
+  });
+  // Return the parsed cookies
+  return cookies;
+}

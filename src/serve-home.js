@@ -17,7 +17,8 @@ function serveHome(req, res) {
     var nav = res.templates.render("_nav.html", {url: req.url});
     var footer = res.templates.render("_footer.html", {});
     var content = res.templates.render("home.html", {arrangements: arrangementList});
-    if(true) content += res.templates.render("create-arrangement.html", {});
+    if (res.message) content += res.templates.render("message.html", {message: res.message});
+    if(req.session && (req.session.role == "Admin" || req.session.role == "Employee")) content += res.templates.render("create-arrangement.html", {});
     var html = res.templates.render("_page.html", {
       page: "Home",
       navigation: nav,
@@ -25,6 +26,9 @@ function serveHome(req, res) {
       footer: footer
     });
     res.setHeader("Content-Type", "text/html");
+    delete res.message;
+     
+         
     res.end(html);
   });
 }

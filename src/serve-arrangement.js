@@ -12,7 +12,7 @@ function serveArrangement(req, res) {
     var nav = res.templates.render("_nav.html", {url: req.url});
     var footer = res.templates.render("_footer.html", {});
     var content = res.templates.render("arrangement.html", arrangement);
-    if(true) content += res.templates.render("update-arrangement.html", arrangement);
+    if(req.session && (req.session.role == "Admin" || req.session.role == "Employee")) content += res.templates.render("update-arrangement.html", arrangement);
     var html = res.templates.render("_page.html", {
       page: arrangement.name,
       navigation: nav,
